@@ -70,4 +70,30 @@ feature 'restaurants' do
       expect(page).to have_content 'Restaurant deleted successfully'
     end
   end
+
+  context 'no invalid restaurants' do
+    before { Restaurant.create name: 'KFC', description: 'Deep fried goodness' }
+
+    scenario 'restaurant name too short' do
+      visit '/restaurants'
+      click_link 'Add a new restaurant'
+      fill_in 'Name', with: 'Mc'
+      fill_in 'Description', with: 'Greasely delicious'
+      click_button 'Create Restaurant'
+      expect(page).not_to have_content 'Mc'
+      expect(Restaurant.all.length).to eq 1
+      expect(page).to have_content 'error'
+    end
+
+    # scenario 'user cannot create two restaurants with the same name' do
+    #   visit '/restaurants'
+    #   click_link 'Add a new restaurant'
+    #   fill_in 'Name', with: 'KFC'
+    #   fill_in 'Description', with: 'Greasely delicious'
+    #   click_button 'Create Restaurant'
+    #   expect(Restaurant.all.length).to eq 1
+    #   expect(page).not_to have_content 'Greasely delicious'
+    #   expect(page).to have_content 'Cannot create duplicate restaurants'
+    # end
+  end
 end
