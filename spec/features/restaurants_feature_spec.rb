@@ -5,7 +5,7 @@ feature 'restaurants' do
     scenario 'should display a prompt to add a restaurant' do
       visit '/restaurants'
       expect(page).to have_content 'No restaurants yet'
-      expect(page).to have_link 'Add a restaurant'
+      expect(page).to have_link 'Add a new restaurant'
     end
   end
 
@@ -18,6 +18,17 @@ feature 'restaurants' do
       visit 'restaurants'
       expect(page).to have_content('Papa John')
       expect(page).not_to have_content('No restaurants yet')
+    end
+  end
+
+  context 'adding a restaurant' do
+    scenario 'prompting user to create a new restaurant through a form and then display the new restaurant' do
+       visit '/restaurants'
+       click_link 'Add a new restaurant'
+       fill_in 'Name', with: 'Papa John'
+       click_button 'Create Restaurant'
+       expect(page).to have_content 'Papa John'
+       expect(current_path).to eq '/restaurants'
     end
   end
 end
