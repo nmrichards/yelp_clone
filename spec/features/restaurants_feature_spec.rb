@@ -85,15 +85,15 @@ feature 'restaurants' do
       expect(page).to have_content 'error'
     end
 
-    # scenario 'user cannot create two restaurants with the same name' do
-    #   visit '/restaurants'
-    #   click_link 'Add a new restaurant'
-    #   fill_in 'Name', with: 'KFC'
-    #   fill_in 'Description', with: 'Greasely delicious'
-    #   click_button 'Create Restaurant'
-    #   expect(Restaurant.all.length).to eq 1
-    #   expect(page).not_to have_content 'Greasely delicious'
-    #   expect(page).to have_content 'Cannot create duplicate restaurants'
-    # end
+    scenario 'user cannot create two restaurants with the same name' do
+      visit '/restaurants'
+      click_link 'Add a new restaurant'
+      fill_in 'Name', with: 'KFC'
+      fill_in 'Description', with: 'Greasely delicious'
+      click_button 'Create Restaurant'
+      expect(Restaurant.all.length).to eq 1
+      expect(page).not_to have_content 'Greasely delicious'
+      expect(page).to have_content 'Name has already been taken'
+    end
   end
 end
