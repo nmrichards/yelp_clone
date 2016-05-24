@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get 'restaurants' => 'restaurants#index'
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-  resource :restaurants
+  resources :restaurants
   # Example resource route with options:
   #   resources :products do
   #     member do
