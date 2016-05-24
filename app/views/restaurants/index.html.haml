@@ -2,6 +2,8 @@
   - @restaurants.each do |restaurant|
     / %a(href="/restaurant/#{restaurant.id}")restaurant.name
     = link_to restaurant.name, restaurant_path(restaurant)
+    = link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
+    %p= restaurant.description
 - else
   No restaurants yet
 
