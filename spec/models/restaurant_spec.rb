@@ -8,4 +8,10 @@ describe Restaurant, type: :model do
     expect(restaurant).not_to be_valid
   end
 
+  it 'not valid if restaurant is already added' do
+    Restaurant.create(name: 'Papa Johns')
+    restaurant = Restaurant.new(name: "Papa Johns")
+    expect(restaurant).to have(1).error_on(:name)
+  end
+
 end
