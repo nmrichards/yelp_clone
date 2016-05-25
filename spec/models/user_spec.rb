@@ -8,6 +8,8 @@ RSpec.describe User, type: :model do
       should have_many(:reviews)
       should have_many(:restaurants)
     end
+
+    it { is_expected.to have_many :reviewed_restaurants}
   end
 
 end
