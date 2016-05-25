@@ -5,6 +5,13 @@ RSpec.describe Restaurant, type: :model do
 end
 
 describe Restaurant, type: :model do
+  it "has correct association with reviews" do
+    should have_many(:reviews)
+  end
+  it "has correct association with user" do
+    should belong_to :user
+  end
+
   it 'is not valid with a name of less than three characters' do
     restaurant = Restaurant.new(name: "kf")
     expect(restaurant).to have(1).error_on(:name)
