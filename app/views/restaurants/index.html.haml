@@ -2,7 +2,8 @@
   - @restaurants.each do |restaurant|
     %h2= link_to restaurant.name, restaurant_path(restaurant)
     %h2= restaurant.description
-    %h2= restaurant.reviews
+    - restaurant.reviews.each do |review|
+      %h5= review.thoughts
     = link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
     = link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete
     = link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant)
