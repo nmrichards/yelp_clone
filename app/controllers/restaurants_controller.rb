@@ -1,4 +1,8 @@
 class RestaurantsController < ApplicationController
+<<<<<<< HEAD
+=======
+
+>>>>>>> day-two
   def index
     @restaurants = Restaurant.all
   end
@@ -8,8 +12,21 @@ class RestaurantsController < ApplicationController
   end
 
   def create
+<<<<<<< HEAD
     Restaurant.create(restaurant_params)
     redirect_to "/restaurants"
+=======
+    @restaurant = Restaurant.new(restaurant_params)
+    if @restaurant.save
+      redirect_to restaurants_path
+    else
+      render "new"
+    end
+  end
+
+  def restaurant_params
+    params.require(:restaurant).permit(:name, :description)
+>>>>>>> day-two
   end
 
   def show
@@ -21,6 +38,7 @@ class RestaurantsController < ApplicationController
   end
 
   def update
+<<<<<<< HEAD
     @restaurant = Restaurant.find(params[:id])
     @restaurant.update(restaurant_params)
     redirect_to "/restaurants"
@@ -29,5 +47,19 @@ class RestaurantsController < ApplicationController
   def restaurant_params
     params.require(:restaurant).permit(:name, :description)
   end
+=======
+   @restaurant = Restaurant.find(params[:id])
+   @restaurant.update(restaurant_params)
+
+   redirect_to '/restaurants'
+ end
+
+ def destroy
+   @restaurant = Restaurant.find(params[:id])
+   @restaurant.destroy
+   flash[:notice] = "Restaurant deleted successfully"
+   redirect_to '/restaurants'
+ end
+>>>>>>> day-two
 
 end

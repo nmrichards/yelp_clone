@@ -4,3 +4,10 @@
 require File.expand_path('../config/application', __FILE__)
 
 Rails.application.load_tasks
+<<<<<<< HEAD
+=======
+
+
+# bin/rake db:create
+# bin/rake db:create RAILS_ENV=test
+>>>>>>> day-two
