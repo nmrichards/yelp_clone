@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '4.2.6'
+gem 'omniauth-facebook'
 gem 'devise'
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
