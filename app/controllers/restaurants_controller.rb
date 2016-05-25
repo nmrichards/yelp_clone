@@ -27,6 +27,9 @@ class RestaurantsController < ApplicationController
   end
 
   def edit
+    if current_user.has_reviewed? @restaurant
+      flash[:errors] = "You've already reviewed this restaurant"
+    end
     @restaurant = Restaurant.find(params[:id])
   end
 
