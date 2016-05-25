@@ -23,12 +23,19 @@ feature 'restaurants' do
 
   context 'creating restaurants' do
     scenario 'prompts user to fill out a form, then displays the new restaurant' do
-      visit '/restaurants'
+      sign_up
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
       click_button 'Create Restaurant'
       expect(page).to have_content 'KFC'
       expect(current_path).to eq '/restaurants'
+    end
+
+    scenario 'a user cannot add a restaurant if not logged in' do
+      visit '/restaurants'
+      click_link 'Add a restaurant'
+      expect(page).not_to have_link'Name'
+      expect(page).to have_content'You need to sign in or sign up before continuing.'
     end
   end
 
@@ -50,7 +57,7 @@ feature 'restaurants' do
   before { Restaurant.create name: 'KFC', description: 'Deep fried goodness' }
 
   scenario 'let a user edit a restaurant' do
-   visit '/restaurants'
+   sign_up
    click_link 'Edit KFC'
    fill_in 'Name', with: 'Kentucky Fried Chicken'
    fill_in 'Description', with: 'Deep fried goodness'
@@ -60,6 +67,12 @@ feature 'restaurants' do
    expect(current_path).to eq '/restaurants'
  end
 
+ # scenario 'user can only edit restaurant that they have added' do
+ #   sign_up
+ #   click_link 'Edit KFC'
+ #   expect(page).to have_content 'Unable to edit'
+ # end
+
 end
 
 context 'deleting restaurants' do
@@ -67,22 +80,39 @@ context 'deleting restaurants' do
   before { Restaurant.create name: 'KFC', description: 'Deep fried goodness' }
 
   scenario 'removes a restaurant when a user clicks a delete link' do
-    visit '/restaurants'
+    sign_up
     click_link 'Delete KFC'
     expect(page).not_to have_content 'KFC'
     expect(page).to have_content 'Restaurant deleted successfully'
   end
+
+  # scenario 'cannot delete ' do
+  #   visit '/restaurants'
+  #   click_link 'Delete KFC'
+  #   expect(page).not_to have_content 'KFC'
+  #   expect(page).to have_content 'Restaurant deleted successfully'
+  # end
 end
 
 context 'an invalid restaurant' do
   it 'does not let you submit a name that is too short' do
-    visit '/restaurants'
+    sign_up
     click_link 'Add a restaurant'
     fill_in 'Name', with: 'kf'
     click_button 'Create Restaurant'
     expect(page).not_to have_css 'h2', text: 'kf'
     expect(page).to have_content 'error'
   end
+end
+
+private
+def sign_up
+  visit '/restaurants'
+  click_link 'Sign up'
+  fill_in 'Email', with: "batman@gmail.com"
+  fill_in 'Password', with: "bananas"
+  fill_in 'Password confirmation', with: "bananas"
+  click_button 'Sign up'
 end
 
 end
