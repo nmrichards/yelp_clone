@@ -1,0 +1,6 @@
+Reviews for <%= @restaurant.name %>
+<% @restaurant.reviews.each do |review| %>
+    <p>Review: <%= review.thoughts %> </p>
+    <p>Rating: <%= review.rating %> </p>
+    <%= link_to "Delete #{review.thoughts}",  restaurant_review_path(@restaurant, review), method: :delete %>
+<% end %>

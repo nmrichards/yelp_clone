@@ -20,6 +20,22 @@ class ReviewsController < ApplicationController
     end
   end
 
+  def index
+    @restaurant = Restaurant.find(params[:restaurant_id])
+  end
+
+  def destroy
+    @restaurant = Restaurant.find(params[:restaurant_id])
+    if @restaurant.user == current_user
+      @review = @restaurant.reviews.find(params[:id])
+      @review.destroy
+      flash[:notice] = 'Review deleted successfully'
+    else
+      flash[:notice] = "Can't delete this review"
+    end
+    redirect_to "/restaurants/#{@restaurant.id}/reviews"
+  end
+
   private
 
   def review_params

@@ -1,6 +1,7 @@
 class RestaurantsController < ApplicationController
 
   before_action :authenticate_user!, :except => [:index, :show]
+#  before_action @restaurant.user 
 
   def index
     @restaurants = Restaurant.all
