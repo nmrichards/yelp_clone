@@ -79,6 +79,7 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
+  url: <%= ENV['DATABASE_URL'] %>
   <<: *default
   database: yelp_clone_production
   username: yelp_clone
