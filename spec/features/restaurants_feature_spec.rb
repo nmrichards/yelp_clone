@@ -63,11 +63,8 @@ feature "restaurants" do
   end
 
   describe "editing restaurants" do
-    before do
-      Restaurant.create name: "KFC", description: "Deep fried goodness"
-    end
     scenario "let a user edit a restaurant" do
-      visit "/restaurants"
+      add_restaurant
       click_link "Edit KFC"
       fill_in "Name", with: "Kentucky Fried Chicken"
       fill_in "Description", with: "Deep fried goodness"
@@ -76,17 +73,30 @@ feature "restaurants" do
       expect(page).to have_content "Deep fried goodness"
       expect(current_path).to eq "/restaurants"
     end
+
+    context "when not the user who created restaurant" do
+      let!(:restaurant){ Restaurant.create(name: "KFC")}
+      scenario "cannot edit" do
+        visit '/'
+        expect(page).not_to have_link"Edit KFC"
+      end
+    end
   end
 
   describe "deleting restaurants" do
-    before do
-      Restaurant.create name: "KFC", description: "Deep fried goodness"
-    end
     scenario "removes a restaurant when a user clicks a delete link" do
-      visit "/restaurants"
+      add_restaurant
       click_link "Delete KFC"
       expect(page).not_to have_content "KFC"
       expect(page).to have_content "Restaurant deleted successfully"
+    end
+
+    context "when not the user who created restaurant" do
+      let!(:restaurant){ Restaurant.create(name: "KFC")}
+      scenario "cannot delete" do
+        visit '/'
+        expect(page).not_to have_link"Delete KFC"
+      end
     end
   end
 
@@ -99,6 +109,22 @@ feature "restaurants" do
       expect(page).not_to have_css "h2", text: "kf"
       expect(page).to have_content "error"
     end
+  end
+
+  def sign_up
+    visit "/"
+    click_link("Sign up")
+    fill_in("Email", with: "test2@test.com")
+    fill_in("Password", with: "testtest")
+    fill_in("Password confirmation", with: "testtest")
+    click_button("Sign up")
+  end
+
+  def add_restaurant
+    visit "/restaurants"
+    click_link "Add a restaurant"
+    fill_in "Name", with: "KFC"
+    click_button "Create Restaurant"
   end
 
 end

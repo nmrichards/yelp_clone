@@ -45,5 +45,17 @@ describe Restaurant, type: :model do
     end
 
   end
+  it "returns true if the current_user is the creator of the restaurant" do
+    user = User.create(email: "test@test.com")
+    restaurant = Restaurant.new(user: user)
+    expect(restaurant.created_by?(user)).to be true
+  end
+
+  it "returns false if the current_user is not the author of the review" do
+    user = User.create(email: "test@test.com")
+    user2 = User.create(email: "test2@test.com")
+    restaurant = Restaurant.new(user: user)
+    expect(restaurant.created_by?(user2)).to be false
+  end
 
 end

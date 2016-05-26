@@ -16,7 +16,8 @@ describe Review, type: :model do
 
   it "returns false if the current_user is not the author of the review" do
     user = User.create(email: "test@test.com")
+    user2 = User.create(email: "test2@test.com")
     review = Review.new(user: user)
-    expect(review.authored_by?(user)).to be true
+    expect(review.authored_by?(user2)).to be false
   end
 end

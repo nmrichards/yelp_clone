@@ -4,4 +4,8 @@ class Restaurant < ActiveRecord::Base
     dependent: :destroy
   belongs_to :user
   validates :name, length: { minimum: 3 }, uniqueness: true
+
+  def created_by?(current_user)
+    user == current_user
+  end
 end

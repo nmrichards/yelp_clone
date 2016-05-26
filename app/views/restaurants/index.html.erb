@@ -2,11 +2,12 @@
   <% @restaurants.each do |restaurant| %>
     <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
     <p><%= restaurant.description %></p>
-
-    <p><%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
+    <% if restaurant.created_by?(current_user) %>
+      <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
       <%= link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete %>
-      <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
-      <%= link_to "#{restaurant.name} Reviews", restaurant_reviews_path(restaurant) %>
+    <% end %>
+    <%= link_to "Review #{restaurant.name}", new_restaurant_review_path(restaurant) %>
+    <%= link_to "#{restaurant.name} Reviews", restaurant_reviews_path(restaurant) %>
   <% end %>
 <% else %>
     <h1>No restaurants yet</h1>
