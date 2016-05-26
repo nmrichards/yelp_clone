@@ -23,7 +23,7 @@ feature 'restaurants' do
 
   context 'adding a restaurant' do
     scenario 'prompting user to create a new restaurant through a form and then display the new restaurant' do
-       visit '/restaurants'
+       sign_up
        click_link 'Add a new restaurant'
        fill_in 'Name', with: 'Papa John'
        click_button 'Create Restaurant'
@@ -48,7 +48,7 @@ feature 'restaurants' do
 
     before {Restaurant.create name: 'KFC'}
     scenario 'user should be able to edit a restaurant' do
-      visit '/restaurants'
+      sign_up
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
       fill_in 'Description', with: 'Deep fried goodness'
@@ -63,7 +63,7 @@ feature 'restaurants' do
     before { Restaurant.create name: 'KFC', description: 'Deep fried goodness'}
 
     scenario 'remove a restaurant' do
-      visit '/restaurants'
+      sign_up
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
       expect(page).not_to have_content 'Deep fried goodness'
@@ -75,7 +75,7 @@ feature 'restaurants' do
     before { Restaurant.create name: 'KFC', description: 'Deep fried goodness' }
 
     scenario 'restaurant name too short' do
-      visit '/restaurants'
+      sign_up
       click_link 'Add a new restaurant'
       fill_in 'Name', with: 'Mc'
       fill_in 'Description', with: 'Greasely delicious'
@@ -86,7 +86,7 @@ feature 'restaurants' do
     end
 
     scenario 'user cannot create two restaurants with the same name' do
-      visit '/restaurants'
+      sign_up
       click_link 'Add a new restaurant'
       fill_in 'Name', with: 'KFC'
       fill_in 'Description', with: 'Greasely delicious'
@@ -95,5 +95,13 @@ feature 'restaurants' do
       expect(page).not_to have_content 'Greasely delicious'
       expect(page).to have_content 'Name has already been taken'
     end
+  end
+  def sign_up
+    visit '/restaurants'
+    click_link 'Sign up'
+    fill_in 'Email', with: "batman@gmail.com"
+    fill_in 'Password', with: "bananas"
+    fill_in 'Password confirmation', with: "bananas"
+    click_button 'Sign up'
   end
 end
