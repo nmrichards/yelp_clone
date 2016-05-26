@@ -7,4 +7,16 @@ describe Review, type: :model do
     review = Review.new(rating: 10)
     expect(review).to have(1).error_on(:rating)
   end
+
+  it "returns true if the current_user is the author of the review" do
+    user = User.create(email: "test@test.com")
+    review = Review.new(user: user)
+    expect(review.authored_by?(user)).to be true
+  end
+
+  it "returns false if the current_user is not the author of the review" do
+    user = User.create(email: "test@test.com")
+    review = Review.new(user: user)
+    expect(review.authored_by?(user)).to be true
+  end
 end

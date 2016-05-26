@@ -40,9 +40,7 @@ feature "reviewing" do
         sign_up
         visit "/restaurants"
         click_link "KFC Reviews"
-        click_link "Delete yum"
-        expect(page).to have_content "yum"
-        expect(page).to have_content "Can't delete this review"
+        expect(page).not_to have_content "Delete yum"
       end
     end
   end
